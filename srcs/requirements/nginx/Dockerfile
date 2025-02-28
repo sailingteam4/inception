@@ -1,3 +1,5 @@
-FROM alpine:3.21
+FROM debian:bullseye
 
-RUN apk update && apk add --no-cache nginx 
+RUN apt update && apt upgrade -y && apt install -y nginx
+
+CMD ["nginx", "-g", "daemon off;"]
