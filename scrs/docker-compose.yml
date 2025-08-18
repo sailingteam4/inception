@@ -5,8 +5,7 @@ services:
     container_name: nginx
     build: ./requirements/nginx
     depends_on:
-      - adminer
-      - redis
+      - wordpress
     ports:
       - 443:443
     volumes:
@@ -40,3 +39,21 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - network
+
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/nrontey/data/mysql
+      o: bind
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/nrontey/data/wordpress
+      o: bind
+
+networks:
+  network:
+    driver: bridge
