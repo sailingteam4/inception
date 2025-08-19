@@ -1,17 +1,28 @@
-all:
-	@docker compose -f ./scrs/docker-compose.yml up -d --build
+LOGIN	= nrontey
+
+all: up
+
+up:
+	@mkdir -p /home/$(LOGIN)/data
+	@mkdir -p /home/$(LOGIN)/data/mariadb
+	@mkdir -p /home/$(LOGIN)/data/wordpress
+	@mkdir -p /home/$(LOGIN)/data/adminer
+	@mkdir -p /home/$(LOGIN)/data/minecraft
+	@docker compose -f ./srcs/docker-compose.yml up -d
 
 down:
-	@docker compose -f ./scrs/docker-compose.yml down
+	@printf "\n🔧 $(_GREEN)Down containers$(_RESET) 🔧\n\n"
+	@docker compose -f ./srcs/docker-compose.yml down
 
-re:
-	@docker compose -f scrs/docker-compose.yml up -d --build
+clean: down
+	@printf "\n🔧 $(_GREEN)Delete /home/$(LOGIN)/data$(_RESET) 🔧\n\n"
+	@rm -rf /home/$(LOGIN)/data
 
-clean:
-	@docker stop $$(docker ps -qa);\
-	docker rm $$(docker ps -qa);\
-	docker rmi -f $$(docker images -qa);\
-	docker volume rm $$(docker volume ls -q);\
-	docker network rm $$(docker network ls -q);\
+fclean: clean
+	@printf "\n🔧 $(_GREEN)Delete containers images$(_RESET) 🔧\n\n"
+	@docker system prune -af
 
-.PHONY: all re down clean
+re: fclean all
+
+.PHONY:
+	all up down clean fclean re
