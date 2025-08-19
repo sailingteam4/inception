@@ -6,8 +6,6 @@ up:
 	@mkdir -p /home/$(LOGIN)/data
 	@mkdir -p /home/$(LOGIN)/data/mariadb
 	@mkdir -p /home/$(LOGIN)/data/wordpress
-	@mkdir -p /home/$(LOGIN)/data/adminer
-	@mkdir -p /home/$(LOGIN)/data/minecraft
 	@docker compose -f ./srcs/docker-compose.yml up -d
 
 down:
