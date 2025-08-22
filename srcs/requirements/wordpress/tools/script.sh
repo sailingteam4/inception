@@ -9,12 +9,4 @@ chmod +x wp-cli.phar
 ./wp-cli.phar core install --url=$DOMAIN_NAME --title=inception --admin_user=$WP_USER --admin_password=$WP_PASS --admin_email=$WP_MAIL --allow-root
 ./wp-cli.phar user create $WP_USER2 $WP_MAIL2 --role=author --user_pass=$WP_PASS2 --allow-root
 
-./wp-cli.phar post create \
-  --post_type=page \
-  --post_status=publish \
-  --post_title="Salut la mif" \
-  --post_name="salut-la-mif" \
-  --post_content="salut la mif" \
-  --allow-root
-
 exec "$@"
